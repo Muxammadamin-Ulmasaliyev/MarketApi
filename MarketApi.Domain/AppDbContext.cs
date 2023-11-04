@@ -1,12 +1,6 @@
 ﻿using MarketApi.Domain;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection.Metadata;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ECommerce.Domain
 {
@@ -18,10 +12,17 @@ namespace ECommerce.Domain
 		}
 
 		public DbSet<Product> Products { get; set; }
+		public DbSet<Brand> Brands { get; set; }
 		protected override void OnModelCreating(ModelBuilder modelBuilder)
 		{
 
 			base.OnModelCreating(modelBuilder);
+
+			
+
+			
+
+			
 		}
 
 

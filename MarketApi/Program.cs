@@ -45,8 +45,13 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+
+
 builder.Services.AddScoped<IProductsRepository, ProductsRepository>();	
 builder.Services.AddScoped<IProductsService,ProductsService>();
+
+builder.Services.AddScoped<IBrandsRepository, BrandsRepository>();
+builder.Services.AddScoped<IBrandsService, BrandsService>();
 
 
 

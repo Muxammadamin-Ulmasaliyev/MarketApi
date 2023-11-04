@@ -21,12 +21,12 @@ namespace MarketApi.Data
 
 		public async Task<Product> Get(int id)
 		{
-			return await _appDbContext.Products.FindAsync(id);
+			return await _appDbContext.Products.Include(p => p.Brand).FirstOrDefaultAsync(p => p.Id == id);
 		}
 
 		public async Task<IEnumerable<Product>> GetAll()
 		{
-			return await _appDbContext.Products.ToListAsync();
+			return await _appDbContext.Products.Include(p => p.Brand).ToListAsync();
 		}
 		public async Task<Product> Create(Product product)
 		{

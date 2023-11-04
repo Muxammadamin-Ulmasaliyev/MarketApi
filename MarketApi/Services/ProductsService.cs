@@ -21,7 +21,9 @@ namespace MarketApi.Services
 				Description = model.Description,
 				Price = model.Price,
 				Quantity = model.Quantity,
-				OutOfStock = model.Quantity <= 0
+				OutOfStock = model.Quantity <= 0,
+
+				BrandId = model.BrandId,
 			};
 
 			var createdProduct = await _productsRepository.Create(product);
@@ -33,7 +35,9 @@ namespace MarketApi.Services
 				Description = createdProduct.Description,
 				Price = createdProduct.Price,
 				Quantity = createdProduct.Quantity,
-				OutOfStock = createdProduct.OutOfStock
+				OutOfStock = createdProduct.OutOfStock,
+
+				BrandId = createdProduct.BrandId
 			};
 
 			return result;
@@ -52,12 +56,14 @@ namespace MarketApi.Services
 			{
 				var model = new ProductModel
 				{
-					Id = productFromDb.Id,															// FIX
+					Id = productFromDb.Id,                                                          // FIX
 					Name = productFromDb.Name,
 					Description = productFromDb.Description,
 					Price = productFromDb.Price,
 					Quantity = productFromDb.Quantity,
-					OutOfStock = productFromDb.OutOfStock
+					OutOfStock = productFromDb.OutOfStock,
+
+					BrandId = productFromDb.BrandId
 				};
 				return model;
 			}
@@ -77,7 +83,9 @@ namespace MarketApi.Services
 					Description = product.Description,
 					Price = product.Price,
 					Quantity = product.Quantity,
-					OutOfStock = product.OutOfStock
+					OutOfStock = product.OutOfStock,
+
+					BrandId = product.BrandId
 				};
 				models.Add(model);
 			}
@@ -94,7 +102,8 @@ namespace MarketApi.Services
 				Description = model.Description,
 				Price = model.Price,
 				Quantity = model.Quantity,
-				OutOfStock = model.Quantity <= 0
+				OutOfStock = model.Quantity <= 0,
+				BrandId = model.BrandId
 			};
 			var updatedProduct = await _productsRepository.Update(id, product);
 			var result = new ProductModel
@@ -104,7 +113,9 @@ namespace MarketApi.Services
 				Description = updatedProduct.Description,
 				Price = updatedProduct.Price,
 				Quantity = updatedProduct.Quantity,
-				OutOfStock = updatedProduct.OutOfStock
+				OutOfStock = updatedProduct.OutOfStock,
+
+				BrandId = updatedProduct.BrandId
 			};
 			return result;
 		}

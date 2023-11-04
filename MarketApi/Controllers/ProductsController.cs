@@ -24,7 +24,12 @@ namespace MarketApi.Controllers
 		[HttpGet]
 		public async Task<IActionResult> Get(int id)
 		{
-			return Ok(await _productsService.Get(id));
+			var productFromDb = await _productsService.Get(id);
+			if(productFromDb == null)
+			{
+				return NotFound();
+			}
+			return Ok(productFromDb);
 		}
 
 		[HttpPost]
