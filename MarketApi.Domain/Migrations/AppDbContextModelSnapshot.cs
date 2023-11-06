@@ -127,12 +127,12 @@ namespace MarketApi.Domain.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<bool>("IsInStock")
+                        .HasColumnType("bit");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("OutOfStock")
-                        .HasColumnType("bit");
 
                     b.Property<double>("Price")
                         .HasColumnType("float");

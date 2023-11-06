@@ -1,6 +1,7 @@
 ﻿using MarketApi.Data;
 using MarketApi.Domain;
 using MarketApi.Models;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 namespace MarketApi.Services
 {
@@ -14,6 +15,7 @@ namespace MarketApi.Services
 
 		public async Task<BrandModel> Create(BrandModel model)
 		{
+			
 			var brand = new Brand
 			{
 				Id = model.Id,
@@ -79,10 +81,10 @@ namespace MarketApi.Services
 			return models;
 		}
 
-		public async Task<IEnumerable<ProductModel>> GetProducts(int brandId)
+		public async Task<IEnumerable<ProductModel>> GetProductsByBrandId(int brandId)
 		{
 			var models = new List<ProductModel>();
-			var products = await _brandsRepository.GetProducts(brandId);
+			var products = await _brandsRepository.GetProductsByBrandId(brandId);
 
 			foreach (var product in products)
 			{
@@ -93,7 +95,7 @@ namespace MarketApi.Services
 					Description = product.Description,
 					Price = product.Price,
 					Quantity = product.Quantity,
-					OutOfStock = product.OutOfStock,
+					IsInStock = product.IsInStock,
 
 					BrandId = product.BrandId
 				};

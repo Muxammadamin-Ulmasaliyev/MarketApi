@@ -32,7 +32,6 @@ namespace MarketApi.Controllers
 			{
 				return NotFound();
 			}
-			//var productsOfBrand = await _brandsService.GetProducts(id);
 			return Ok(brandFromDb);
 		}
 
@@ -65,11 +64,11 @@ namespace MarketApi.Controllers
 				return NotFound();
 		}
 
-		/*[Route("{brandId:int:min(1)}")]
+		[Route("{brandId:int:min(1)}/products")]
 		[HttpGet]
-		public async Task<IActionResult> GetProducts(int brandId)
+		public async Task<IActionResult> GetProductsByBrandId(int brandId)
 		{
-			return Ok(await _brandsService.GetProducts(brandId));
-		}*/
+			return Ok(await _brandsService.GetProductsByBrandId(brandId));
+		}
 	}
 }

@@ -13,7 +13,7 @@ namespace MarketApi.Services
 
 
 
-		Task<IEnumerable<ProductModel>> GetProducts(int brandId);
+		Task<IEnumerable<ProductModel>> GetProductsByBrandId(int brandId);
 
 	}
 }

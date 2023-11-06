@@ -1,19 +1,27 @@
 ﻿using MarketApi.Data;
 using MarketApi.Domain;
 using MarketApi.Models;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 namespace MarketApi.Services
 {
 	public class ProductsService : IProductsService
 	{
 		private readonly IProductsRepository _productsRepository;
-		public ProductsService(IProductsRepository productsRepository)
+		private readonly IValidationService _validationService;
+		public ProductsService(IProductsRepository productsRepository, IValidationService validationService)
 		{
 			_productsRepository = productsRepository;
+			_validationService = validationService;
 		}
 
 		public async Task<ProductModel> Create(ProductModel model)
 		{
+
+			if(!await _validationService.IsValidBrandId(model.BrandId))
+			{
+				throw new Exception("Invalid BrandId number!");
+			}
 			var product = new Product
 			{
 				Id = model.Id,
@@ -21,7 +29,7 @@ namespace MarketApi.Services
 				Description = model.Description,
 				Price = model.Price,
 				Quantity = model.Quantity,
-				OutOfStock = model.Quantity <= 0,
+				IsInStock = model.Quantity > 0,
 
 				BrandId = model.BrandId,
 			};
@@ -35,7 +43,7 @@ namespace MarketApi.Services
 				Description = createdProduct.Description,
 				Price = createdProduct.Price,
 				Quantity = createdProduct.Quantity,
-				OutOfStock = createdProduct.OutOfStock,
+				IsInStock = createdProduct.IsInStock,
 
 				BrandId = createdProduct.BrandId
 			};
@@ -61,7 +69,7 @@ namespace MarketApi.Services
 					Description = productFromDb.Description,
 					Price = productFromDb.Price,
 					Quantity = productFromDb.Quantity,
-					OutOfStock = productFromDb.OutOfStock,
+					IsInStock = productFromDb.IsInStock,
 
 					BrandId = productFromDb.BrandId
 				};
@@ -83,7 +91,7 @@ namespace MarketApi.Services
 					Description = product.Description,
 					Price = product.Price,
 					Quantity = product.Quantity,
-					OutOfStock = product.OutOfStock,
+					IsInStock = product.IsInStock,
 
 					BrandId = product.BrandId
 				};
@@ -102,7 +110,7 @@ namespace MarketApi.Services
 				Description = model.Description,
 				Price = model.Price,
 				Quantity = model.Quantity,
-				OutOfStock = model.Quantity <= 0,
+				IsInStock = model.Quantity > 0,
 				BrandId = model.BrandId
 			};
 			var updatedProduct = await _productsRepository.Update(id, product);
@@ -113,7 +121,7 @@ namespace MarketApi.Services
 				Description = updatedProduct.Description,
 				Price = updatedProduct.Price,
 				Quantity = updatedProduct.Quantity,
-				OutOfStock = updatedProduct.OutOfStock,
+				IsInStock = updatedProduct.IsInStock,
 
 				BrandId = updatedProduct.BrandId
 			};

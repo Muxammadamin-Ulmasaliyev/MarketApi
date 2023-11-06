@@ -15,7 +15,9 @@ namespace MarketApi.Data
 		Task<Brand> Update(int id, Brand brand);
 		Task<bool> Delete(int id);
 
+		Task<bool> CheckIfExists(int id);
 
-		Task<IEnumerable<Product>> GetProducts(int brandId);
+
+		Task<IEnumerable<Product>> GetProductsByBrandId(int brandId);
 	}
 }

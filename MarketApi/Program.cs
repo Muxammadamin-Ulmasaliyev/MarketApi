@@ -53,6 +53,7 @@ builder.Services.AddScoped<IProductsService,ProductsService>();
 builder.Services.AddScoped<IBrandsRepository, BrandsRepository>();
 builder.Services.AddScoped<IBrandsService, BrandsService>();
 
+builder.Services.AddScoped<IValidationService, ValidationService>();
 
 
 var app = builder.Build();

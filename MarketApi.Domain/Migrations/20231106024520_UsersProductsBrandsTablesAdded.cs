@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace MarketApi.Domain.Migrations
 {
     /// <inheritdoc />
-    public partial class initialsetup : Migration
+    public partial class UsersProductsBrandsTablesAdded : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -181,7 +181,7 @@ namespace MarketApi.Domain.Migrations
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Price = table.Column<double>(type: "float", nullable: false),
                     Quantity = table.Column<int>(type: "int", nullable: false),
-                    OutOfStock = table.Column<bool>(type: "bit", nullable: false),
+                    IsInStock = table.Column<bool>(type: "bit", nullable: false),
                     BrandId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>

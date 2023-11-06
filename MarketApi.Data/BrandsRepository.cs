@@ -49,7 +49,13 @@ namespace MarketApi.Data
 			return brand;
 		}
 
-		public async Task<IEnumerable<Product>> GetProducts(int brandId)
+
+		public async Task<bool> CheckIfExists(int id)
+		{
+			return await _appDbContext.Brands.AnyAsync(b => b.Id == id);
+		}
+
+		public async Task<IEnumerable<Product>> GetProductsByBrandId(int brandId)
 		{
 			return await _appDbContext.Products.Where(p => p.BrandId == brandId).ToListAsync();
 		}

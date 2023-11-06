@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MarketApi.Domain.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20231104105130_initialsetup")]
-    partial class initialsetup
+    [Migration("20231106024520_UsersProductsBrandsTablesAdded")]
+    partial class UsersProductsBrandsTablesAdded
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -130,12 +130,12 @@ namespace MarketApi.Domain.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<bool>("IsInStock")
+                        .HasColumnType("bit");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("OutOfStock")
-                        .HasColumnType("bit");
 
                     b.Property<double>("Price")
                         .HasColumnType("float");

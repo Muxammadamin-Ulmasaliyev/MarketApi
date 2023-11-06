@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using MarketApi.Domain;
+using System.ComponentModel.DataAnnotations;
 
 namespace MarketApi.Models
 {
