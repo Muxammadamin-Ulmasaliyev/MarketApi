@@ -14,5 +14,6 @@ namespace MarketApi.Models
 		[Required(ErrorMessage = "Country is required")]
 
 		public string ManufacturedCountry { get; set; }
+
 	}
 }

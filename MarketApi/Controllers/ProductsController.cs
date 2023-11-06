@@ -14,6 +14,7 @@ namespace MarketApi.Controllers
 		{
 			_productsService = productsService;
 		}
+
 		[HttpGet]
 		public async Task<IActionResult> Get()
 		{
@@ -39,6 +40,7 @@ namespace MarketApi.Controllers
 			var routeValues = new { id = createdProduct.Id };
 			return CreatedAtRoute(routeValues, createdProduct);
 		}
+
 		[Route("{id:int:min(1)}")]
         [HttpPut]
         public async Task<IActionResult> Put(int id, [FromBody] ProductModel model)
