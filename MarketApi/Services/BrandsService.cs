@@ -81,6 +81,7 @@ namespace MarketApi.Services
 			return models;
 		}
 
+
 		public async Task<IEnumerable<ProductModel>> GetProductsByBrandId(int brandId)
 		{
 			var models = new List<ProductModel>();

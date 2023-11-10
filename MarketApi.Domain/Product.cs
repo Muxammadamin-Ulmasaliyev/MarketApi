@@ -16,6 +16,8 @@ namespace MarketApi.Domain
         public int Quantity { get; set; }
         public bool IsInStock { get; set; }
 
+        public string ImageUrl { get; set; }
+
         [ForeignKey("Brand")]
         public int BrandId { get; set; }
         public Brand Brand { get; set; }

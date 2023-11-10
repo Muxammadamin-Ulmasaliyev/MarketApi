@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MarketApi.Domain.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20231106024520_UsersProductsBrandsTablesAdded")]
-    partial class UsersProductsBrandsTablesAdded
+    [Migration("20231109113940_initial")]
+    partial class initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -127,6 +127,10 @@ namespace MarketApi.Domain.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ImageUrl")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 

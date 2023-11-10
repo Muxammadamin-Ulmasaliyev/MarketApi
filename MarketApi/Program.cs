@@ -54,6 +54,7 @@ builder.Services.AddScoped<IBrandsRepository, BrandsRepository>();
 builder.Services.AddScoped<IBrandsService, BrandsService>();
 
 builder.Services.AddScoped<IValidationService, ValidationService>();
+builder.Services.AddScoped<IImagesService, ImagesService>();
 
 
 var app = builder.Build();

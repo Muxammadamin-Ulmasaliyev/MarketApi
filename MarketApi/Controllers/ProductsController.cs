@@ -3,6 +3,7 @@ using MarketApi.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
+
 namespace MarketApi.Controllers
 {
 	[Route("api/[controller]")]
@@ -10,9 +11,11 @@ namespace MarketApi.Controllers
 	public class ProductsController : ControllerBase
 	{
 		private readonly IProductsService _productsService;
-		public ProductsController(IProductsService productsService)
+		private readonly Microsoft.Extensions.Hosting.IHostingEnvironment _hostingEnvironment;
+		public ProductsController(IProductsService productsService, Microsoft.Extensions.Hosting.IHostingEnvironment hostingEnvironment)
 		{
 			_productsService = productsService;
+			_hostingEnvironment = hostingEnvironment;
 		}
 
 		[HttpGet]
@@ -34,8 +37,12 @@ namespace MarketApi.Controllers
 		}
 
 		[HttpPost]
-		public async Task<IActionResult> Post([FromBody] ProductModel model)
+		public async Task<IActionResult> Post([FromForm] ProductModel model)
 		{
+			if(!ModelState.IsValid)
+			{
+				return BadRequest(ModelState);
+			}
 			var createdProduct = await _productsService.Create(model);
 			var routeValues = new { id = createdProduct.Id };
 			return CreatedAtRoute(routeValues, createdProduct);
@@ -43,8 +50,9 @@ namespace MarketApi.Controllers
 
 		[Route("{id:int:min(1)}")]
         [HttpPut]
-        public async Task<IActionResult> Put(int id, [FromBody] ProductModel model)
+        public async Task<IActionResult> Put(int id, [FromForm] ProductModel model)
         {
+
             var updatedProduct = await _productsService.Update(id, model);
             return Ok(updatedProduct);
         }

@@ -16,5 +16,8 @@ namespace MarketApi.Models
 
 		public string ManufacturedCountry { get; set; }
 
+		
+
+
 	}
 }

@@ -9,6 +9,8 @@ namespace MarketApi.Data
 {
 	public interface IProductsRepository
 	{
+		Task<string> GetImageUrlById(int id);
+
 		Task<IEnumerable<Product>> GetAll();
 		Task<Product> Get(int id);
 		Task<Product> Create(Product product);

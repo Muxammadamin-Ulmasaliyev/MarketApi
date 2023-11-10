@@ -18,6 +18,16 @@ namespace MarketApi.Data
 		}
 
 
+		public	async Task<string> GetImageUrlById(int id)
+		{
+			var product =  await _appDbContext.Products.AsNoTracking().FirstAsync(p => p.Id == id);
+			if(product == null)
+			{
+				return null;
+			}
+			return product.ImageUrl;
+		}
+
 
 		public async Task<Product> Get(int id)
 		{

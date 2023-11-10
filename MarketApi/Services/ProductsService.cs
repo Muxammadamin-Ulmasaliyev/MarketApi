@@ -9,19 +9,29 @@ namespace MarketApi.Services
 	{
 		private readonly IProductsRepository _productsRepository;
 		private readonly IValidationService _validationService;
-		public ProductsService(IProductsRepository productsRepository, IValidationService validationService)
+		private readonly Microsoft.AspNetCore.Hosting.IHostingEnvironment _hostingEnvironment;
+		private readonly IImagesService _imagesService;
+		public ProductsService(IProductsRepository productsRepository, IValidationService validationService, Microsoft.AspNetCore.Hosting.IHostingEnvironment hostingEnvironment, IImagesService imagesService)
 		{
 			_productsRepository = productsRepository;
 			_validationService = validationService;
+			_hostingEnvironment = hostingEnvironment;
+			_imagesService = imagesService;
 		}
 
 		public async Task<ProductModel> Create(ProductModel model)
 		{
 
-			if(!await _validationService.IsValidBrandId(model.BrandId))
+			if (!await _validationService.IsValidBrandId(model.BrandId))
 			{
 				throw new Exception("Invalid BrandId number!");
 			}
+
+			var filename = model.ProductImage.FileName;
+
+			await _imagesService.SaveImage(model);
+			
+
 			var product = new Product
 			{
 				Id = model.Id,
@@ -30,8 +40,8 @@ namespace MarketApi.Services
 				Price = model.Price,
 				Quantity = model.Quantity,
 				IsInStock = model.Quantity > 0,
-
 				BrandId = model.BrandId,
+				ImageUrl = "ProductImages/" + filename
 			};
 
 			var createdProduct = await _productsRepository.Create(product);
@@ -44,8 +54,8 @@ namespace MarketApi.Services
 				Price = createdProduct.Price,
 				Quantity = createdProduct.Quantity,
 				IsInStock = createdProduct.IsInStock,
-
-				BrandId = createdProduct.BrandId
+				BrandId = createdProduct.BrandId,
+				ImageUrl = createdProduct.ImageUrl
 			};
 
 			return result;
@@ -54,6 +64,10 @@ namespace MarketApi.Services
 
 		public async Task<bool> Delete(int id)
 		{
+			if(!await _imagesService.DeleteImage(id))
+			{
+				return false;
+			}
 			return await _productsRepository.Delete(id);
 		}
 
@@ -70,8 +84,8 @@ namespace MarketApi.Services
 					Price = productFromDb.Price,
 					Quantity = productFromDb.Quantity,
 					IsInStock = productFromDb.IsInStock,
-
-					BrandId = productFromDb.BrandId
+					BrandId = productFromDb.BrandId,
+					ImageUrl = productFromDb.ImageUrl
 				};
 				return model;
 			}
@@ -93,7 +107,8 @@ namespace MarketApi.Services
 					Quantity = product.Quantity,
 					IsInStock = product.IsInStock,
 
-					BrandId = product.BrandId
+					BrandId = product.BrandId,
+					ImageUrl = product.ImageUrl
 				};
 				models.Add(model);
 			}
@@ -103,6 +118,10 @@ namespace MarketApi.Services
 
 		public async Task<ProductModel> Update(int id, ProductModel model)
 		{
+			
+
+			await _imagesService.UpdateImage(id, model);
+
 			var product = new Product
 			{
 				Id = id,
@@ -111,8 +130,10 @@ namespace MarketApi.Services
 				Price = model.Price,
 				Quantity = model.Quantity,
 				IsInStock = model.Quantity > 0,
-				BrandId = model.BrandId
-			};
+				BrandId = model.BrandId,
+				ImageUrl = "ProductImages/" + model.ProductImage.FileName
+		};
+			
 			var updatedProduct = await _productsRepository.Update(id, product);
 			var result = new ProductModel
 			{
@@ -123,7 +144,8 @@ namespace MarketApi.Services
 				Quantity = updatedProduct.Quantity,
 				IsInStock = updatedProduct.IsInStock,
 
-				BrandId = updatedProduct.BrandId
+				BrandId = updatedProduct.BrandId,
+				ImageUrl = updatedProduct.ImageUrl
 			};
 			return result;
 		}

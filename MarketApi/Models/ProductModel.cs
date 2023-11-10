@@ -12,10 +12,21 @@ namespace MarketApi.Models
 		[Required(ErrorMessage = "Price is required")]
 		public double Price { get; set; }
 		[Required(ErrorMessage = "Quantity is required")]
+
 		public int Quantity { get; set; }
 		public bool IsInStock { get; set; }
 
 		[Required]
+		public IFormFile ProductImage { get; set; }
+
+
+		[Required]
 		public int BrandId { get; set; }
-	}
+
+		public string ImageUrl { get; set; } = string.Empty;
+		
+		
+
+
+    }
 }

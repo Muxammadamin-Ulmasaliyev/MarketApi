@@ -6,7 +6,8 @@ namespace ECommerce.Domain
 {
 	public class AppDbContext : IdentityDbContext<AppUser>
 	{
-		public AppDbContext(DbContextOptions<AppDbContext> dbContextOptions) : base(dbContextOptions)
+       
+        public AppDbContext(DbContextOptions<AppDbContext> dbContextOptions) : base(dbContextOptions)
 		{
 
 		}
