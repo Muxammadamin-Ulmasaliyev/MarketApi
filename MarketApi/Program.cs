@@ -1,6 +1,7 @@
 using ECommerce.Domain;
 using MarketApi.Data;
 using MarketApi.Domain;
+using MarketApi.Models;
 using MarketApi.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
@@ -45,8 +46,18 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+
+
 builder.Services.AddScoped<IProductsRepository, ProductsRepository>();	
 builder.Services.AddScoped<IProductsService,ProductsService>();
+
+builder.Services.AddScoped<IBrandsRepository, BrandsRepository>();
+builder.Services.AddScoped<IBrandsService, BrandsService>();
+
+builder.Services.AddScoped<IValidationService, ValidationService>();
+
+builder.Services.AddScoped<IImagesService<ProductModel>, ProductImagesService>();
+builder.Services.AddScoped<IImagesService<BrandModel>, BrandImagesService>();
 
 
 
