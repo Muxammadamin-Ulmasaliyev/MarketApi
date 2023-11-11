@@ -9,13 +9,11 @@ namespace MarketApi.Services
 	{
 		private readonly IProductsRepository _productsRepository;
 		private readonly IValidationService _validationService;
-		private readonly Microsoft.AspNetCore.Hosting.IHostingEnvironment _hostingEnvironment;
-		private readonly IImagesService _imagesService;
-		public ProductsService(IProductsRepository productsRepository, IValidationService validationService, Microsoft.AspNetCore.Hosting.IHostingEnvironment hostingEnvironment, IImagesService imagesService)
+		private readonly IImagesService<ProductModel> _imagesService;
+		public ProductsService(IProductsRepository productsRepository, IValidationService validationService, IImagesService<ProductModel> imagesService)
 		{
 			_productsRepository = productsRepository;
 			_validationService = validationService;
-			_hostingEnvironment = hostingEnvironment;
 			_imagesService = imagesService;
 		}
 
@@ -27,7 +25,7 @@ namespace MarketApi.Services
 				throw new Exception("Invalid BrandId number!");
 			}
 
-			var filename = model.ProductImage.FileName;
+			var imageName = model.Image.FileName;
 
 			await _imagesService.SaveImage(model);
 			
@@ -41,7 +39,7 @@ namespace MarketApi.Services
 				Quantity = model.Quantity,
 				IsInStock = model.Quantity > 0,
 				BrandId = model.BrandId,
-				ImageUrl = "ProductImages/" + filename
+				ImageUrl = "ProductImages/" + imageName
 			};
 
 			var createdProduct = await _productsRepository.Create(product);
@@ -131,7 +129,7 @@ namespace MarketApi.Services
 				Quantity = model.Quantity,
 				IsInStock = model.Quantity > 0,
 				BrandId = model.BrandId,
-				ImageUrl = "ProductImages/" + model.ProductImage.FileName
+				ImageUrl = "ProductImages/" + model.Image.FileName
 		};
 			
 			var updatedProduct = await _productsRepository.Update(id, product);
@@ -148,6 +146,83 @@ namespace MarketApi.Services
 				ImageUrl = updatedProduct.ImageUrl
 			};
 			return result;
+		}
+
+		public async Task<IEnumerable<ProductModel>> GetBySearchTerm(string searchTerm)
+		{
+			var productsFromDb = await _productsRepository.GetProductsBySearchTerm(searchTerm);
+			var models = new List<ProductModel>();
+
+			foreach (var product in productsFromDb)
+			{
+				var model = new ProductModel
+				{
+					Id = product.Id,
+					Name = product.Name,
+					Description = product.Description,
+					Price = product.Price,
+					Quantity = product.Quantity,
+					IsInStock = product.IsInStock,
+
+					BrandId = product.BrandId,
+					ImageUrl = product.ImageUrl
+				};
+				models.Add(model);
+			}
+
+			return models;
+		}
+
+		public async Task<IEnumerable<ProductModel>> FilterProducts(double minPrice, double maxPrice)
+		{
+			var models = new List<ProductModel>();
+
+			var productsFromDb = await _productsRepository.FilterProducts(minPrice, maxPrice);
+
+			foreach (var product in productsFromDb)
+			{
+				var model = new ProductModel
+				{
+					Id = product.Id,
+					Name = product.Name,
+					Description = product.Description,
+					Price = product.Price,
+					Quantity = product.Quantity,
+					IsInStock = product.IsInStock,
+
+					BrandId = product.BrandId,
+					ImageUrl = product.ImageUrl
+				};
+				models.Add(model);
+			}
+
+			return models;
+
+		}
+
+		public async Task<IEnumerable<ProductModel>> GetProductsOrderBy(string orderBy)
+		{
+			var models = new List<ProductModel>();
+			var productsFromDb = await _productsRepository.GetProductsOrderBy(orderBy);
+
+			foreach (var product in productsFromDb)
+			{
+				var model = new ProductModel
+				{
+					Id = product.Id,
+					Name = product.Name,
+					Description = product.Description,
+					Price = product.Price,
+					Quantity = product.Quantity,
+					IsInStock = product.IsInStock,
+
+					BrandId = product.BrandId,
+					ImageUrl = product.ImageUrl
+				};
+				models.Add(model);
+			}
+
+			return models;
 		}
 	}
 }

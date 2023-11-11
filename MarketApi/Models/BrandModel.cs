@@ -16,7 +16,9 @@ namespace MarketApi.Models
 
 		public string ManufacturedCountry { get; set; }
 
-		
+		[Required]
+		public IFormFile Image { get; set; }
+		public string ImageUrl { get; set; } = string.Empty;
 
 
 	}

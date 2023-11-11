@@ -6,11 +6,11 @@ using IHostingEnvironment = Microsoft.AspNetCore.Hosting.IHostingEnvironment;
 
 namespace MarketApi.Services
 {
-	public class ImagesService : IImagesService
+	public class ProductImagesService : IImagesService<ProductModel>
 	{
 		private readonly IHostingEnvironment _hostingEnvironment;
 		private readonly IProductsRepository _productsRepository;
-		public ImagesService(IHostingEnvironment hostingEnvironment, IProductsRepository productsRepository)
+		public ProductImagesService(IHostingEnvironment hostingEnvironment, IProductsRepository productsRepository)
 		{
 			_hostingEnvironment = hostingEnvironment;
 			_productsRepository = productsRepository;
@@ -27,14 +27,14 @@ namespace MarketApi.Services
 
 				if (!Directory.Exists(directoryPath))
 				{
-					Directory.CreateDirectory(directoryPath);                                                               
+					Directory.CreateDirectory(directoryPath);
 				}
 
-				var filename = model.ProductImage.FileName;
+				var filename = model.Image.FileName;
 
 				using (var fileStream = new FileStream(Path.Combine(directoryPath, filename), FileMode.Create))
 				{
-					await model.ProductImage.CopyToAsync(fileStream);
+					await model.Image.CopyToAsync(fileStream);
 				}
 				return true;
 			}
@@ -54,21 +54,24 @@ namespace MarketApi.Services
 
 				if (!Directory.Exists(directoryPath))
 				{
-					Directory.CreateDirectory(directoryPath);                                                               
+					Directory.CreateDirectory(directoryPath);
 				}
 
 				var oldProductsImageUrl = await _productsRepository.GetImageUrlById(id);
-
+				if (oldProductsImageUrl == null)
+				{
+					return false;
+				}
 				var filePath = Path.Combine(rootDirectoryPath, oldProductsImageUrl);
 
-				var newFilename = model.ProductImage.FileName;
+				var newFilename = model.Image.FileName;
 
 				if (File.Exists(filePath))
 				{
 					File.Delete(filePath);
 					using (var fileStream = new FileStream(Path.Combine(rootDirectoryPath, "ProductImages/", newFilename), FileMode.Create))
 					{
-						await model.ProductImage.CopyToAsync(fileStream);
+						await model.Image.CopyToAsync(fileStream);
 					}
 					return true;
 				}
@@ -87,20 +90,20 @@ namespace MarketApi.Services
 		public async Task<bool> DeleteImage(int id)
 		{
 			try
-			{ 
-				var imageToDelete = await _productsRepository.GetImageUrlById(id);
-				if (imageToDelete == null)
+			{
+				var imageUrlToDelete = await _productsRepository.GetImageUrlById(id);
+				if (imageUrlToDelete == null)
 				{
 					return false;
 				}
-				var filePath = Path.Combine(_hostingEnvironment.WebRootPath, imageToDelete);
+				var filePath = Path.Combine(_hostingEnvironment.WebRootPath, imageUrlToDelete);
 				if (!File.Exists(filePath))
 				{
 					return false;
 				}
 				File.Delete(filePath);
 			}
-			catch(Exception ex)
+			catch (Exception ex)
 			{
 				return false;
 			}

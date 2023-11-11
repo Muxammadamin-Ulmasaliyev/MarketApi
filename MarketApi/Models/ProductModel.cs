@@ -17,7 +17,7 @@ namespace MarketApi.Models
 		public bool IsInStock { get; set; }
 
 		[Required]
-		public IFormFile ProductImage { get; set; }
+		public IFormFile Image { get; set; }
 
 
 		[Required]

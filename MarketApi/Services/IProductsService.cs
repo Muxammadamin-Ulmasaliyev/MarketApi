@@ -13,5 +13,9 @@ namespace MarketApi.Services
 		Task<ProductModel> Update(int id, ProductModel model);
 		Task<bool> Delete(int id);
 
+		Task<IEnumerable<ProductModel>> GetBySearchTerm(string searchTerm);
+		Task<IEnumerable<ProductModel>> FilterProducts(double minPrice, double maxPrice);
+
+		Task<IEnumerable<ProductModel>> GetProductsOrderBy(string orderBy);
 	}
 }

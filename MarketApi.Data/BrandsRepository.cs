@@ -12,6 +12,15 @@ namespace MarketApi.Data
 			_appDbContext = appDbContext;
 		}
 
+		public async Task<string> GetImageUrlById(int id)
+		{
+			var brand = await _appDbContext.Brands.AsNoTracking().FirstOrDefaultAsync(b => b.Id == id);
+			if(brand == null)
+			{
+				return null;
+			}
+			return brand.ImageUrl;
+		}
 		public async Task<Brand> Create(Brand brand)
 		{
 			await _appDbContext.Brands.AddAsync(brand);
@@ -58,6 +67,44 @@ namespace MarketApi.Data
 		public async Task<IEnumerable<Product>> GetProductsByBrandId(int brandId)
 		{
 			return await _appDbContext.Products.Where(p => p.BrandId == brandId).ToListAsync();
+		}
+
+		public async Task<IEnumerable<Brand>> GetBrandsBySearchTerm(string searchTerm)
+		{
+			if (string.IsNullOrEmpty(searchTerm))
+			{
+				return await _appDbContext.Brands.ToListAsync();
+			}
+			var brands = await _appDbContext.Brands.Where(p => p.Name.Contains(searchTerm) || p.Description.Contains(searchTerm) || p.ManufacturedCountry.Contains(searchTerm)).ToListAsync();
+			return brands;
+		}
+
+		
+
+		public async Task<IEnumerable<Brand>> GetBrandsOrderBy(string orderBy)
+		{
+			var brands = _appDbContext.Brands.AsQueryable();
+			orderBy = orderBy.ToLower();
+			switch (orderBy)
+			{
+				case "name":
+					brands = brands.OrderBy(b => b.Name);
+					break;
+				case "namedescending":
+					brands = brands.OrderByDescending(b => b.Name);
+					break;
+				case "country":
+					brands = brands.OrderBy(b => b.ManufacturedCountry);
+					break;
+				case "countrydescending":
+					brands = brands.OrderByDescending(b => b.ManufacturedCountry);
+					break;
+				default:
+					brands = brands.OrderBy(b => b.Id);
+					break;
+			}
+
+			return await brands.ToListAsync();
 		}
 	}
 }

@@ -8,20 +8,27 @@ namespace MarketApi.Services
 	public class BrandsService : IBrandsService
 	{
 		private readonly IBrandsRepository _brandsRepository;
-        public BrandsService(IBrandsRepository brandsRepository)
+		private readonly IImagesService<BrandModel> _imagesService;
+        public BrandsService(IBrandsRepository brandsRepository, IImagesService<BrandModel> imagesService)
         {
             _brandsRepository = brandsRepository;
+			_imagesService = imagesService;
         }
 
 		public async Task<BrandModel> Create(BrandModel model)
 		{
-			
+
+			var imageName = model.Image.FileName;
+
+			await _imagesService.SaveImage(model);
+
 			var brand = new Brand
 			{
 				Id = model.Id,
 				Name = model.Name,
 				Description = model.Description,
-				ManufacturedCountry = model.ManufacturedCountry
+				ManufacturedCountry = model.ManufacturedCountry,
+				ImageUrl = "BrandImages/" + imageName
 			};
 
 
@@ -32,7 +39,8 @@ namespace MarketApi.Services
 				Id = createdBrand.Id,
 				Name = createdBrand.Name,
 				Description = createdBrand.Description,
-				ManufacturedCountry = createdBrand.ManufacturedCountry
+				ManufacturedCountry = createdBrand.ManufacturedCountry,
+				ImageUrl = createdBrand.ImageUrl
 			};
 
 			return result;
@@ -40,6 +48,10 @@ namespace MarketApi.Services
 
 		public async Task<bool> Delete(int id)
 		{
+			if (!await _imagesService.DeleteImage(id))
+			{
+				return false;
+			}
 			return await _brandsRepository.Delete(id);
 		}
 
@@ -53,7 +65,8 @@ namespace MarketApi.Services
 					Id = brandFromDb.Id,
 					Name = brandFromDb.Name,
 					Description = brandFromDb.Description,
-					ManufacturedCountry = brandFromDb.ManufacturedCountry
+					ManufacturedCountry = brandFromDb.ManufacturedCountry,
+					ImageUrl = brandFromDb.ImageUrl
 				};
 				return model;
 			}
@@ -73,7 +86,8 @@ namespace MarketApi.Services
 					Id = brand.Id,
 					Name = brand.Name,
 					Description = brand.Description,
-					ManufacturedCountry = brand.ManufacturedCountry
+					ManufacturedCountry = brand.ManufacturedCountry,
+					ImageUrl = brand.ImageUrl	
 				};
 				models.Add(model);
 			}
@@ -81,6 +95,47 @@ namespace MarketApi.Services
 			return models;
 		}
 
+		public async Task<IEnumerable<BrandModel>> GetBrandsOrderBy(string orderBy)
+		{
+			var models = new List<BrandModel>();
+			var brandsFromDb = await _brandsRepository.GetBrandsOrderBy(orderBy);
+
+			foreach (var brand in brandsFromDb)
+			{
+				var model = new BrandModel
+				{
+					Id = brand.Id,
+					Name = brand.Name,
+					Description = brand.Description,
+					ManufacturedCountry = brand.ManufacturedCountry,
+					ImageUrl = brand.ImageUrl
+				};
+				models.Add(model);
+			}
+
+			return models;
+		}
+
+		public async Task<IEnumerable<BrandModel>> GetBySearchTerm(string searchTerm)
+		{
+			var models = new List<BrandModel>();
+			var brandsFromDb = await _brandsRepository.GetBrandsBySearchTerm(searchTerm);
+
+			foreach (var brand in brandsFromDb)
+			{
+				var model = new BrandModel
+				{
+					Id = brand.Id,
+					Name = brand.Name,
+					Description = brand.Description,
+					ManufacturedCountry = brand.ManufacturedCountry,
+					ImageUrl = brand.ImageUrl
+				};
+				models.Add(model);
+			}
+
+			return models;
+		}
 
 		public async Task<IEnumerable<ProductModel>> GetProductsByBrandId(int brandId)
 		{
@@ -98,7 +153,8 @@ namespace MarketApi.Services
 					Quantity = product.Quantity,
 					IsInStock = product.IsInStock,
 
-					BrandId = product.BrandId
+					BrandId = product.BrandId,
+					ImageUrl= product.ImageUrl
 				};
 				models.Add(model);
 			}
@@ -109,12 +165,17 @@ namespace MarketApi.Services
 
 		public async Task<BrandModel> Update(int id, BrandModel model)
 		{
+
+			await _imagesService.UpdateImage(id, model);
+
+
 			var brand = new Brand
 			{
 				Id = id,
 				Name = model.Name,
 				Description = model.Description,
-				ManufacturedCountry = model.ManufacturedCountry
+				ManufacturedCountry = model.ManufacturedCountry,
+				ImageUrl = "BrandImages/" + model.Image.FileName
 			};
 
 			var updatedBrand = await _brandsRepository.Update(id, brand);
@@ -123,7 +184,8 @@ namespace MarketApi.Services
 				Id = updatedBrand.Id,
 				Name = updatedBrand.Name,
 				Description = updatedBrand.Description,
-				ManufacturedCountry = updatedBrand.ManufacturedCountry
+				ManufacturedCountry = updatedBrand.ManufacturedCountry,
+				ImageUrl = updatedBrand.ImageUrl
 			};
 
 			return result;

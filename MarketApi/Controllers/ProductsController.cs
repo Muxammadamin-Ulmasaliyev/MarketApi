@@ -2,7 +2,7 @@
 using MarketApi.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-
+using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 
 namespace MarketApi.Controllers
 {
@@ -67,6 +67,30 @@ namespace MarketApi.Controllers
 				return NoContent();
 			else
 				return NotFound();
+		}
+
+		[Route("search")]
+		[HttpGet]
+		public async Task<IActionResult> SearchProducts(string? searchTerm)
+		{
+			var products = await _productsService.GetBySearchTerm(searchTerm);
+			return Ok(products);
+		}
+
+		[Route("filter")]
+		[HttpGet]
+		public async Task<IActionResult> FilterProducts(double minPrice, double maxPrice)
+		{
+			var filteredProducts = await _productsService.FilterProducts(minPrice, maxPrice);
+			return Ok(filteredProducts);
+		}
+
+		[Route("sort")]
+		[HttpGet]
+		public async Task<IActionResult> GetProductsOrderBy(string orderBy)
+		{
+			var sortedProducts = await _productsService.GetProductsOrderBy(orderBy);
+			return Ok(sortedProducts);
 		}
 	}
 }

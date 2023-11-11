@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MarketApi.Domain.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20231109113940_initial")]
+    [Migration("20231110165455_initial")]
     partial class initial
     {
         /// <inheritdoc />
@@ -99,6 +99,10 @@ namespace MarketApi.Domain.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ImageUrl")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 

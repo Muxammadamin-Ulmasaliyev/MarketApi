@@ -2,10 +2,10 @@
 
 namespace MarketApi.Services
 {
-	public interface IImagesService
+	public interface IImagesService<T> where T : class
 	{
-		public Task<bool> SaveImage(ProductModel model);
-		public Task<bool> UpdateImage(int id,ProductModel model);
+		public Task<bool> SaveImage(T model);
+		public Task<bool> UpdateImage(int id, T model);
 
 		public Task<bool> DeleteImage(int id);
 	}

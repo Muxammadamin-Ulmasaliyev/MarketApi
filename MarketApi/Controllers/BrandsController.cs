@@ -36,8 +36,12 @@ namespace MarketApi.Controllers
 		}
 
 		[HttpPost]
-		public async Task<IActionResult> Post([FromBody] BrandModel model)
+		public async Task<IActionResult> Post([FromForm] BrandModel model)
 		{
+			if(!ModelState.IsValid)
+			{
+				return BadRequest(ModelState);
+			}
 			var createdBrand = await _brandsService.Create(model);
 			var routeValues = new { id = createdBrand.Id };
 			return CreatedAtRoute(routeValues, createdBrand);
@@ -45,7 +49,7 @@ namespace MarketApi.Controllers
 
 		[Route("{id:int:min(1)}")]
 		[HttpPut]
-		public async Task<IActionResult> Put(int id, [FromBody] BrandModel model)
+		public async Task<IActionResult> Put(int id, [FromForm] BrandModel model)
 		{
 			var updatedBrand = await _brandsService.Update(id, model);
 			return Ok(updatedBrand);
@@ -69,6 +73,24 @@ namespace MarketApi.Controllers
 		public async Task<IActionResult> GetProductsByBrandId(int brandId)
 		{
 			return Ok(await _brandsService.GetProductsByBrandId(brandId));
+		}
+
+
+		[Route("search")]
+		[HttpGet]
+		public async Task<IActionResult> SearchBrands(string? searchTerm)
+		{
+			var brands = await _brandsService.GetBySearchTerm(searchTerm);
+			return Ok(brands);
+		}
+
+
+		[Route("sort")]
+		[HttpGet]
+		public async Task<IActionResult> GetBrandsOrderBy(string orderBy)
+		{
+			var sortedBrands = await _brandsService.GetBrandsOrderBy(orderBy);
+			return Ok(sortedBrands);
 		}
 	}
 }

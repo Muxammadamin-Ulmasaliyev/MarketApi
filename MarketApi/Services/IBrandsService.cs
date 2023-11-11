@@ -12,8 +12,11 @@ namespace MarketApi.Services
 		Task<bool> Delete(int id);
 
 
-
 		Task<IEnumerable<ProductModel>> GetProductsByBrandId(int brandId);
+
+		Task<IEnumerable<BrandModel>> GetBySearchTerm(string searchTerm);
+		Task<IEnumerable<BrandModel>> GetBrandsOrderBy(string orderBy);
+
 
 	}
 }
