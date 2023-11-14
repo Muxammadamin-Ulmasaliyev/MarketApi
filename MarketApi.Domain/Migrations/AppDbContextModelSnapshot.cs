@@ -116,6 +116,35 @@ namespace MarketApi.Domain.Migrations
                     b.ToTable("Brands");
                 });
 
+            modelBuilder.Entity("MarketApi.Domain.Car", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Company")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ImageUrl")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ManufacturedCountry")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Model")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Cars");
+                });
+
             modelBuilder.Entity("MarketApi.Domain.Product", b =>
                 {
                     b.Property<int>("Id")
@@ -125,6 +154,9 @@ namespace MarketApi.Domain.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<int>("BrandId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("CarId")
                         .HasColumnType("int");
 
                     b.Property<string>("Description")
@@ -151,6 +183,8 @@ namespace MarketApi.Domain.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("BrandId");
+
+                    b.HasIndex("CarId");
 
                     b.ToTable("Products");
                 });
@@ -296,7 +330,15 @@ namespace MarketApi.Domain.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("MarketApi.Domain.Car", "Car")
+                        .WithMany("Products")
+                        .HasForeignKey("CarId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.Navigation("Brand");
+
+                    b.Navigation("Car");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -351,6 +393,11 @@ namespace MarketApi.Domain.Migrations
                 });
 
             modelBuilder.Entity("MarketApi.Domain.Brand", b =>
+                {
+                    b.Navigation("Products");
+                });
+
+            modelBuilder.Entity("MarketApi.Domain.Car", b =>
                 {
                     b.Navigation("Products");
                 });

@@ -75,7 +75,7 @@ namespace MarketApi.Data
 			{
 				return await _appDbContext.Brands.ToListAsync();
 			}
-			var brands = await _appDbContext.Brands.Where(p => p.Name.Contains(searchTerm) || p.Description.Contains(searchTerm) || p.ManufacturedCountry.Contains(searchTerm)).ToListAsync();
+			var brands = await _appDbContext.Brands.Where(b => b.Name.Contains(searchTerm) || b.Description.Contains(searchTerm) || b.ManufacturedCountry.Contains(searchTerm)).ToListAsync();
 			return brands;
 		}
 

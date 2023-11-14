@@ -54,10 +54,15 @@ builder.Services.AddScoped<IProductsService,ProductsService>();
 builder.Services.AddScoped<IBrandsRepository, BrandsRepository>();
 builder.Services.AddScoped<IBrandsService, BrandsService>();
 
+builder.Services.AddScoped<ICarsRepository, CarsRepository>();
+builder.Services.AddScoped<ICarsService, CarsService>();
+
 builder.Services.AddScoped<IValidationService, ValidationService>();
 
 builder.Services.AddScoped<IImagesService<ProductModel>, ProductImagesService>();
 builder.Services.AddScoped<IImagesService<BrandModel>, BrandImagesService>();
+builder.Services.AddScoped<IImagesService<CarModel>, CarImagesService>();
+
 
 
 

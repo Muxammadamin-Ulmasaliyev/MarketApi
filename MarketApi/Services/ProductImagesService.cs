@@ -64,7 +64,7 @@ namespace MarketApi.Services
 				}
 				var filePath = Path.Combine(rootDirectoryPath, oldProductsImageUrl);
 
-				var newFilename = model.Image.FileName;
+				var newFilename = model.Image.FileName; 
 
 				if (File.Exists(filePath))
 				{

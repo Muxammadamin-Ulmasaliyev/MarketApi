@@ -22,10 +22,17 @@ namespace MarketApi.Models
 
 		[Required]
 		public int BrandId { get; set; }
+        [Required]
+        public int CarId { get; set; }
 
-		public string ImageUrl { get; set; } = string.Empty;
-		
-		
+        public string ImageUrl { get; set; } = string.Empty;
+
+
+
+
+        
+
+
 
 
     }

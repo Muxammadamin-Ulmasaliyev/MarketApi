@@ -75,12 +75,12 @@ namespace MarketApi.Services
 					Directory.CreateDirectory(directoryPath);
 				}
 
-				var oldProductsImageUrl = await _brandsRepository.GetImageUrlById(id);
-				if (oldProductsImageUrl == null)
+				var oldBrandsImageUrl = await _brandsRepository.GetImageUrlById(id);
+				if (oldBrandsImageUrl == null)
 				{
 					return false;
 				}
-				var filePath = Path.Combine(rootDirectoryPath, oldProductsImageUrl);
+				var filePath = Path.Combine(rootDirectoryPath, oldBrandsImageUrl);
 
 				var newFilename = model.Image.FileName;
 

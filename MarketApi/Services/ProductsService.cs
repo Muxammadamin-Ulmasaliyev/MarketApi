@@ -20,15 +20,15 @@ namespace MarketApi.Services
 		public async Task<ProductModel> Create(ProductModel model)
 		{
 
-			if (!await _validationService.IsValidBrandId(model.BrandId))
+			if (!await _validationService.IsValidBrandAndCarId(model.BrandId, model.CarId))
 			{
-				throw new Exception("Invalid BrandId number!");
+				throw new Exception("Invalid BrandId or CarId");
 			}
 
 			var imageName = model.Image.FileName;
 
 			await _imagesService.SaveImage(model);
-			
+
 
 			var product = new Product
 			{
@@ -39,7 +39,8 @@ namespace MarketApi.Services
 				Quantity = model.Quantity,
 				IsInStock = model.Quantity > 0,
 				BrandId = model.BrandId,
-				ImageUrl = "ProductImages/" + imageName
+				ImageUrl = "ProductImages/" + imageName,
+				CarId = model.CarId,
 			};
 
 			var createdProduct = await _productsRepository.Create(product);
@@ -53,7 +54,8 @@ namespace MarketApi.Services
 				Quantity = createdProduct.Quantity,
 				IsInStock = createdProduct.IsInStock,
 				BrandId = createdProduct.BrandId,
-				ImageUrl = createdProduct.ImageUrl
+				ImageUrl = createdProduct.ImageUrl,
+				CarId = createdProduct.CarId
 			};
 
 			return result;
@@ -62,7 +64,7 @@ namespace MarketApi.Services
 
 		public async Task<bool> Delete(int id)
 		{
-			if(!await _imagesService.DeleteImage(id))
+			if (!await _imagesService.DeleteImage(id))
 			{
 				return false;
 			}
@@ -83,7 +85,8 @@ namespace MarketApi.Services
 					Quantity = productFromDb.Quantity,
 					IsInStock = productFromDb.IsInStock,
 					BrandId = productFromDb.BrandId,
-					ImageUrl = productFromDb.ImageUrl
+					ImageUrl = productFromDb.ImageUrl,
+					CarId = productFromDb.CarId
 				};
 				return model;
 			}
@@ -106,7 +109,8 @@ namespace MarketApi.Services
 					IsInStock = product.IsInStock,
 
 					BrandId = product.BrandId,
-					ImageUrl = product.ImageUrl
+					ImageUrl = product.ImageUrl,
+					CarId = product.CarId
 				};
 				models.Add(model);
 			}
@@ -116,7 +120,7 @@ namespace MarketApi.Services
 
 		public async Task<ProductModel> Update(int id, ProductModel model)
 		{
-			
+
 
 			await _imagesService.UpdateImage(id, model);
 
@@ -129,9 +133,10 @@ namespace MarketApi.Services
 				Quantity = model.Quantity,
 				IsInStock = model.Quantity > 0,
 				BrandId = model.BrandId,
-				ImageUrl = "ProductImages/" + model.Image.FileName
-		};
-			
+				ImageUrl = "ProductImages/" + model.Image.FileName,
+				CarId= model.CarId
+			};
+
 			var updatedProduct = await _productsRepository.Update(id, product);
 			var result = new ProductModel
 			{
@@ -143,7 +148,8 @@ namespace MarketApi.Services
 				IsInStock = updatedProduct.IsInStock,
 
 				BrandId = updatedProduct.BrandId,
-				ImageUrl = updatedProduct.ImageUrl
+				ImageUrl = updatedProduct.ImageUrl,
+				CarId = updatedProduct.CarId
 			};
 			return result;
 		}
@@ -165,7 +171,8 @@ namespace MarketApi.Services
 					IsInStock = product.IsInStock,
 
 					BrandId = product.BrandId,
-					ImageUrl = product.ImageUrl
+					ImageUrl = product.ImageUrl,
+					CarId = product.CarId
 				};
 				models.Add(model);
 			}
@@ -191,7 +198,8 @@ namespace MarketApi.Services
 					IsInStock = product.IsInStock,
 
 					BrandId = product.BrandId,
-					ImageUrl = product.ImageUrl
+					ImageUrl = product.ImageUrl,
+					CarId = product.CarId
 				};
 				models.Add(model);
 			}
@@ -217,7 +225,8 @@ namespace MarketApi.Services
 					IsInStock = product.IsInStock,
 
 					BrandId = product.BrandId,
-					ImageUrl = product.ImageUrl
+					ImageUrl = product.ImageUrl,
+					CarId = product.CarId
 				};
 				models.Add(model);
 			}

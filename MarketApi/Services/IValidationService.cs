@@ -2,6 +2,6 @@
 {
 	public interface IValidationService
 	{
-		Task<bool> IsValidBrandId(int brandId);
+		Task<bool> IsValidBrandAndCarId(int brandId, int carId);
 	}
 }

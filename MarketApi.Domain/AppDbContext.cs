@@ -14,7 +14,9 @@ namespace ECommerce.Domain
 
 		public DbSet<Product> Products { get; set; }
 		public DbSet<Brand> Brands { get; set; }
-		protected override void OnModelCreating(ModelBuilder modelBuilder)
+
+        public DbSet<Car> Cars { get; set; }
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
 		{
 
 			base.OnModelCreating(modelBuilder);

@@ -29,4 +29,9 @@
     <ProjectReference Include="..\MarketApi.Domain\MarketApi.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\BrandImages\" />
+    <Folder Include="wwwroot\ProductImages\" />
+  </ItemGroup>
+
 </Project>

@@ -21,5 +21,9 @@ namespace MarketApi.Domain
         [ForeignKey("Brand")]
         public int BrandId { get; set; }
         public Brand Brand { get; set; }
+
+        [ForeignKey("Car")]
+        public int CarId { get; set; }
+        public Car Car { get; set; }
     }
 }
