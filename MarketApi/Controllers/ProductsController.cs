@@ -1,5 +1,6 @@
 ﻿using MarketApi.Models;
 using MarketApi.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
@@ -37,6 +38,8 @@ namespace MarketApi.Controllers
 		}
 
 		[HttpPost]
+
+		//[Authorize(Roles = "Admin")]	****************************************************************************************************************
 		public async Task<IActionResult> Post([FromForm] ProductModel model)
 		{
 			if(!ModelState.IsValid)

@@ -48,7 +48,7 @@ namespace MarketApi.Services
 					Directory.CreateDirectory(directoryPath);
 				}
 
-				var filename = model.Image.FileName;
+				var filename = model.Name + ".jpg";
 
 				using (var fileStream = new FileStream(Path.Combine(directoryPath, filename), FileMode.Create))
 				{
@@ -82,7 +82,7 @@ namespace MarketApi.Services
 				}
 				var filePath = Path.Combine(rootDirectoryPath, oldBrandsImageUrl);
 
-				var newFilename = model.Image.FileName;
+				var newFilename = model.Name + ".jpg";
 
 				if (File.Exists(filePath))
 				{

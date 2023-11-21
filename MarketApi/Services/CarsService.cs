@@ -1,5 +1,6 @@
 ﻿using MarketApi.Data;
 using MarketApi.Domain;
+using MarketApi.MapProfiles;
 using MarketApi.Models;
 
 namespace MarketApi.Services
@@ -15,30 +16,18 @@ namespace MarketApi.Services
 		}
 		public async Task<CarModel> Create(CarModel model)
 		{
-			var imageName = model.Image.FileName;
 
 			await _imagesService.SaveImage(model);
 
-			var car = new Car
-			{
-				Id = model.Id,
-				Company = model.Company,
-				Model = model.Model,
-				ManufacturedCountry = model.ManufacturedCountry,
-				ImageUrl = "CarImages/" + imageName
-			};
+			var car = Mapper.Map(model);
+
+			
 
 
 			var createdCar = await _carsRepository.Create(car);
 
-			var result = new CarModel
-			{
-				Id = createdCar.Id,
-				Company = createdCar.Company,
-				Model = model.Model,
-				ManufacturedCountry = createdCar.ManufacturedCountry,
-				ImageUrl = createdCar.ImageUrl
-			};
+			var result = Mapper.Map(createdCar);
+			
 
 			return result;
 		}
@@ -57,14 +46,8 @@ namespace MarketApi.Services
 			var carFromDb = await _carsRepository.Get(id);
 			if (carFromDb != null)
 			{
-				var model = new CarModel
-				{
-					Id = carFromDb.Id,
-					Company = carFromDb.Company,
-					Model = carFromDb.Model,
-					ManufacturedCountry = carFromDb.ManufacturedCountry,
-					ImageUrl = carFromDb.ImageUrl
-				};
+				var model = Mapper.Map(carFromDb);
+				
 				return model;
 			}
 			return null;
@@ -76,14 +59,9 @@ namespace MarketApi.Services
 			var carsFromDb = await _carsRepository.GetAll();
 			foreach (var car in carsFromDb)
 			{
-				var model = new CarModel
-				{
-					Id = car.Id,
-					Company = car.Company,
-					Model = car.Model,
-					ManufacturedCountry = car.ManufacturedCountry,
-					ImageUrl = car.ImageUrl
-				};
+				var model = Mapper.Map(car);
+
+				
 				models.Add(model);
 			}
 
@@ -97,14 +75,8 @@ namespace MarketApi.Services
 
 			foreach (var car in carsFromDb)
 			{
-				var model = new CarModel
-				{
-					Id = car.Id,
-					Company = car.Company,
-					Model = car.Model,
-					ManufacturedCountry = car.ManufacturedCountry,
-					ImageUrl = car.ImageUrl
-				};
+				var model = Mapper.Map(car);
+
 				models.Add(model);
 			}
 
@@ -118,14 +90,8 @@ namespace MarketApi.Services
 
 			foreach (var car in carsFromDb)
 			{
-				var model = new CarModel
-				{
-					Id = car.Id,
-					Company = car.Company,
-					Model = car.Model,
-					ManufacturedCountry = car.ManufacturedCountry,
-					ImageUrl = car.ImageUrl
-				};
+				var model = Mapper.Map(car);
+
 				models.Add(model);
 			}
 
@@ -139,18 +105,9 @@ namespace MarketApi.Services
 
 			foreach (var product in products)
 			{
-				var model = new ProductModel
-				{
-					Id = product.Id,
-					Name = product.Name,
-					Description = product.Description,
-					Price = product.Price,
-					Quantity = product.Quantity,
-					IsInStock = product.IsInStock,
+				var model = Mapper.Map(product);
 
-					BrandId = product.BrandId,
-					ImageUrl = product.ImageUrl
-				};
+				
 				models.Add(model);
 			}
 
@@ -161,25 +118,12 @@ namespace MarketApi.Services
 		{
 			await _imagesService.UpdateImage(id, model);
 
-
-			var car = new Car
-			{
-				Id = id,
-				Company = model.Company,
-				Model = model.Model,
-				ManufacturedCountry = model.ManufacturedCountry,
-				ImageUrl = "CarImages/" + model.Image.FileName
-			};
+			var car = Mapper.Map(id,model);
+			
 
 			var updatedCar = await _carsRepository.Update(id, car);
-			var result = new CarModel
-			{
-				Id = updatedCar.Id,
-				Company = updatedCar.Company,
-				Model = updatedCar.Model,
-				ManufacturedCountry = updatedCar.ManufacturedCountry,
-				ImageUrl = updatedCar.ImageUrl
-			};
+			var result = Mapper.Map(updatedCar);
+			
 
 			return result;
 		}

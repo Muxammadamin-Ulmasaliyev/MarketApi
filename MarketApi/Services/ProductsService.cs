@@ -1,5 +1,6 @@
 ﻿using MarketApi.Data;
 using MarketApi.Domain;
+using MarketApi.MapProfiles;
 using MarketApi.Models;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 
@@ -25,38 +26,20 @@ namespace MarketApi.Services
 				throw new Exception("Invalid BrandId or CarId");
 			}
 
-			var imageName = model.Image.FileName;
 
 			await _imagesService.SaveImage(model);
 
 
-			var product = new Product
-			{
-				Id = model.Id,
-				Name = model.Name,
-				Description = model.Description,
-				Price = model.Price,
-				Quantity = model.Quantity,
-				IsInStock = model.Quantity > 0,
-				BrandId = model.BrandId,
-				ImageUrl = "ProductImages/" + imageName,
-				CarId = model.CarId,
-			};
+			var product = Mapper.Map(model);
+
+
+			#region Will be fixed soon . . .
 
 			var createdProduct = await _productsRepository.Create(product);
+			var createdProductGettedFromDb = await _productsRepository.Get(createdProduct.Id);
+			var result = Mapper.Map(createdProductGettedFromDb);
 
-			var result = new ProductModel
-			{
-				Id = createdProduct.Id,
-				Name = createdProduct.Name,
-				Description = createdProduct.Description,
-				Price = createdProduct.Price,
-				Quantity = createdProduct.Quantity,
-				IsInStock = createdProduct.IsInStock,
-				BrandId = createdProduct.BrandId,
-				ImageUrl = createdProduct.ImageUrl,
-				CarId = createdProduct.CarId
-			};
+			#endregion
 
 			return result;
 
@@ -76,18 +59,8 @@ namespace MarketApi.Services
 			var productFromDb = await _productsRepository.Get(id);
 			if (productFromDb != null)
 			{
-				var model = new ProductModel
-				{
-					Id = productFromDb.Id,                                                          // FIX
-					Name = productFromDb.Name,
-					Description = productFromDb.Description,
-					Price = productFromDb.Price,
-					Quantity = productFromDb.Quantity,
-					IsInStock = productFromDb.IsInStock,
-					BrandId = productFromDb.BrandId,
-					ImageUrl = productFromDb.ImageUrl,
-					CarId = productFromDb.CarId
-				};
+				var model = Mapper.Map(productFromDb);
+
 				return model;
 			}
 			return null;
@@ -99,19 +72,7 @@ namespace MarketApi.Services
 			var productsFromDb = await _productsRepository.GetAll();
 			foreach (var product in productsFromDb)
 			{
-				var model = new ProductModel
-				{
-					Id = product.Id,
-					Name = product.Name,
-					Description = product.Description,
-					Price = product.Price,
-					Quantity = product.Quantity,
-					IsInStock = product.IsInStock,
-
-					BrandId = product.BrandId,
-					ImageUrl = product.ImageUrl,
-					CarId = product.CarId
-				};
+				var model = Mapper.Map(product);
 				models.Add(model);
 			}
 
@@ -124,33 +85,14 @@ namespace MarketApi.Services
 
 			await _imagesService.UpdateImage(id, model);
 
-			var product = new Product
-			{
-				Id = id,
-				Name = model.Name,
-				Description = model.Description,
-				Price = model.Price,
-				Quantity = model.Quantity,
-				IsInStock = model.Quantity > 0,
-				BrandId = model.BrandId,
-				ImageUrl = "ProductImages/" + model.Image.FileName,
-				CarId= model.CarId
-			};
+			var product = Mapper.Map(id, model);
+
+			#region Will be fixed soon . . .
 
 			var updatedProduct = await _productsRepository.Update(id, product);
-			var result = new ProductModel
-			{
-				Id = updatedProduct.Id,
-				Name = updatedProduct.Name,
-				Description = updatedProduct.Description,
-				Price = updatedProduct.Price,
-				Quantity = updatedProduct.Quantity,
-				IsInStock = updatedProduct.IsInStock,
-
-				BrandId = updatedProduct.BrandId,
-				ImageUrl = updatedProduct.ImageUrl,
-				CarId = updatedProduct.CarId
-			};
+			var updatedProductGettedFromDb = await _productsRepository.Get(updatedProduct.Id);
+			var result = Mapper.Map(updatedProduct);
+			#endregion
 			return result;
 		}
 
@@ -161,19 +103,9 @@ namespace MarketApi.Services
 
 			foreach (var product in productsFromDb)
 			{
-				var model = new ProductModel
-				{
-					Id = product.Id,
-					Name = product.Name,
-					Description = product.Description,
-					Price = product.Price,
-					Quantity = product.Quantity,
-					IsInStock = product.IsInStock,
+				var model = Mapper.Map(product);
 
-					BrandId = product.BrandId,
-					ImageUrl = product.ImageUrl,
-					CarId = product.CarId
-				};
+
 				models.Add(model);
 			}
 
@@ -188,19 +120,8 @@ namespace MarketApi.Services
 
 			foreach (var product in productsFromDb)
 			{
-				var model = new ProductModel
-				{
-					Id = product.Id,
-					Name = product.Name,
-					Description = product.Description,
-					Price = product.Price,
-					Quantity = product.Quantity,
-					IsInStock = product.IsInStock,
+				var model = Mapper.Map(product);
 
-					BrandId = product.BrandId,
-					ImageUrl = product.ImageUrl,
-					CarId = product.CarId
-				};
 				models.Add(model);
 			}
 
@@ -215,19 +136,9 @@ namespace MarketApi.Services
 
 			foreach (var product in productsFromDb)
 			{
-				var model = new ProductModel
-				{
-					Id = product.Id,
-					Name = product.Name,
-					Description = product.Description,
-					Price = product.Price,
-					Quantity = product.Quantity,
-					IsInStock = product.IsInStock,
+				var model = Mapper.Map(product);
 
-					BrandId = product.BrandId,
-					ImageUrl = product.ImageUrl,
-					CarId = product.CarId
-				};
+
 				models.Add(model);
 			}
 

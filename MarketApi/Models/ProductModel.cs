@@ -1,4 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using MarketApi.Domain;
+using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
+using System.ComponentModel.DataAnnotations;
 
 namespace MarketApi.Models
 {
@@ -8,6 +10,7 @@ namespace MarketApi.Models
 		[MaxLength(30, ErrorMessage = "Name should be shorter than 30 characters")]
 		[Required(ErrorMessage = "Name is required")]
 		public string Name { get; set; }
+		[ValidateNever]
 		public string Description { get; set; }
 		[Required(ErrorMessage = "Price is required")]
 		public double Price { get; set; }
@@ -28,9 +31,14 @@ namespace MarketApi.Models
         public string ImageUrl { get; set; } = string.Empty;
 
 
+		[ValidateNever]
+        public string BrandName { get; set; }
+		[ValidateNever]
+
+		public string CarName { get; set; }
 
 
-        
+
 
 
 

@@ -32,12 +32,12 @@ namespace MarketApi.Data
 
 		public async Task<Product> Get(int id)
 		{
-			return await _appDbContext.Products.Include(p => p.Brand).FirstOrDefaultAsync(p => p.Id == id);
+			return await _appDbContext.Products.Include(p => p.Brand).Include(p => p.Car).FirstOrDefaultAsync(p => p.Id == id);
 		}
 
 		public async Task<IEnumerable<Product>> GetAll()
 		{
-			return await _appDbContext.Products.Include(p => p.Brand).ToListAsync();
+			return await _appDbContext.Products.Include(p => p.Brand).Include(p => p.Car).ToListAsync();
 		}
 		public async Task<Product> Create(Product product)
 		{
@@ -69,21 +69,28 @@ namespace MarketApi.Data
 		{
 			if (string.IsNullOrEmpty(searchTerm))
 			{
-				return await _appDbContext.Products.Include(p => p.Brand).ToListAsync();
+				return await _appDbContext.Products.Include(p => p.Brand).Include(p => p.Car).ToListAsync();
 			}
-			var products = await _appDbContext.Products.Include(p => p.Brand).Where(p => p.Name.Contains(searchTerm) || p.Description.Contains(searchTerm)).ToListAsync();
+			var products = await _appDbContext.Products.Include(p => p.Brand).Include(p => p.Car).Where(p => 
+			p.Name.Contains(searchTerm) || 
+			p.Description.Contains(searchTerm) || 
+			p.Car.Company.Contains(searchTerm) ||
+			p.Car.Model.Contains(searchTerm) ||
+			p.Brand.Name.Contains(searchTerm)
+			).ToListAsync();
+
 			return products;
 		}
 
 		public async Task<IEnumerable<Product>> FilterProducts(double minPrice, double maxPrice)
 		{
-			var products = await _appDbContext.Products.Include(p => p.Brand).Where(p => p.Price >= minPrice && p.Price <= maxPrice).ToListAsync();
+			var products = await _appDbContext.Products.Include(p => p.Brand).Include(p => p.Car).Where(p => p.Price >= minPrice && p.Price <= maxPrice).ToListAsync();
 			return products;
 		}
 
 		public async Task<IEnumerable<Product>> GetProductsOrderBy(string orderBy)
 		{
-			var products = _appDbContext.Products.Include(p => p.Brand).AsQueryable();
+			var products = _appDbContext.Products.Include(p => p.Brand).Include(p => p.Car).AsQueryable();
 			orderBy = orderBy.ToLower();
 			switch(orderBy)
 			{

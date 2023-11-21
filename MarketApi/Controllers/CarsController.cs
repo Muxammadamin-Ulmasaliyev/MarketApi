@@ -38,10 +38,10 @@ namespace MarketApi.Controllers
 		[HttpPost]
 		public async Task<IActionResult> Post([FromForm] CarModel carModel)
 		{
-			/*if (!ModelState.IsValid)
+			if (!ModelState.IsValid)
 			{
 				return BadRequest(ModelState);
-			}*/
+			}
 			var createdCar = await _carsService.Create(carModel);
 			var routeValues = new { id = createdCar.Id };
 			return CreatedAtRoute(routeValues, createdCar);
@@ -49,9 +49,9 @@ namespace MarketApi.Controllers
 
 		[Route("{id:int:min(1)}")]
 		[HttpPut]
-		public async Task<IActionResult> Put(int id, [FromForm] CarModel model)
+		public async Task<IActionResult> Put(int id, [FromForm] CarModel carModel)
 		{
-			var updatedCar = await _carsService.Update(id, model);
+			var updatedCar = await _carsService.Update(id, carModel);
 			return Ok(updatedCar);
 		}
 		[Route("{id:int:min(1)}")]

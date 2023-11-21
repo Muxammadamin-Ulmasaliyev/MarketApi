@@ -1,5 +1,6 @@
 ﻿using MarketApi.Data;
 using MarketApi.Domain;
+using MarketApi.MapProfiles;
 using MarketApi.Models;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 
@@ -9,39 +10,27 @@ namespace MarketApi.Services
 	{
 		private readonly IBrandsRepository _brandsRepository;
 		private readonly IImagesService<BrandModel> _imagesService;
-        public BrandsService(IBrandsRepository brandsRepository, IImagesService<BrandModel> imagesService)
-        {
-            _brandsRepository = brandsRepository;
+		public BrandsService(IBrandsRepository brandsRepository, IImagesService<BrandModel> imagesService)
+		{
+			_brandsRepository = brandsRepository;
 			_imagesService = imagesService;
-        }
+		}
 
 		public async Task<BrandModel> Create(BrandModel model)
 		{
 
-			var imageName = model.Image.FileName;
 
 			await _imagesService.SaveImage(model);
 
-			var brand = new Brand
-			{
-				Id = model.Id,
-				Name = model.Name,
-				Description = model.Description,
-				ManufacturedCountry = model.ManufacturedCountry,
-				ImageUrl = "BrandImages/" + imageName
-			};
+			var brand = Mapper.Map(model);
+
 
 
 			var createdBrand = await _brandsRepository.Create(brand);
 
-			var result = new BrandModel
-			{
-				Id = createdBrand.Id,
-				Name = createdBrand.Name,
-				Description = createdBrand.Description,
-				ManufacturedCountry = createdBrand.ManufacturedCountry,
-				ImageUrl = createdBrand.ImageUrl
-			};
+			var result = Mapper.Map(createdBrand);
+
+
 
 			return result;
 		}
@@ -58,16 +47,11 @@ namespace MarketApi.Services
 		public async Task<BrandModel> Get(int id)
 		{
 			var brandFromDb = await _brandsRepository.Get(id);
-			if(brandFromDb != null)
+			if (brandFromDb != null)
 			{
-				var model = new BrandModel
-				{
-					Id = brandFromDb.Id,
-					Name = brandFromDb.Name,
-					Description = brandFromDb.Description,
-					ManufacturedCountry = brandFromDb.ManufacturedCountry,
-					ImageUrl = brandFromDb.ImageUrl
-				};
+				var model = Mapper.Map(brandFromDb);
+
+
 				return model;
 			}
 			return null;
@@ -81,14 +65,9 @@ namespace MarketApi.Services
 			var brandsFromDb = await _brandsRepository.GetAll();
 			foreach (var brand in brandsFromDb)
 			{
-				var model = new BrandModel
-				{
-					Id = brand.Id,
-					Name = brand.Name,
-					Description = brand.Description,
-					ManufacturedCountry = brand.ManufacturedCountry,
-					ImageUrl = brand.ImageUrl	
-				};
+				var model = Mapper.Map(brand);
+
+
 				models.Add(model);
 			}
 
@@ -102,14 +81,9 @@ namespace MarketApi.Services
 
 			foreach (var brand in brandsFromDb)
 			{
-				var model = new BrandModel
-				{
-					Id = brand.Id,
-					Name = brand.Name,
-					Description = brand.Description,
-					ManufacturedCountry = brand.ManufacturedCountry,
-					ImageUrl = brand.ImageUrl
-				};
+				var model = Mapper.Map(brand);
+
+
 				models.Add(model);
 			}
 
@@ -123,14 +97,9 @@ namespace MarketApi.Services
 
 			foreach (var brand in brandsFromDb)
 			{
-				var model = new BrandModel
-				{
-					Id = brand.Id,
-					Name = brand.Name,
-					Description = brand.Description,
-					ManufacturedCountry = brand.ManufacturedCountry,
-					ImageUrl = brand.ImageUrl
-				};
+				var model = Mapper.Map(brand);
+
+
 				models.Add(model);
 			}
 
@@ -144,49 +113,31 @@ namespace MarketApi.Services
 
 			foreach (var product in products)
 			{
-				var model = new ProductModel
-				{
-					Id = product.Id,
-					Name = product.Name,
-					Description = product.Description,
-					Price = product.Price,
-					Quantity = product.Quantity,
-					IsInStock = product.IsInStock,
+				var model = Mapper.Map(product);
 
-					BrandId = product.BrandId,
-					ImageUrl= product.ImageUrl
-				};
+
 				models.Add(model);
 			}
 
 			return models;
-			
+
 		}
 
 		public async Task<BrandModel> Update(int id, BrandModel model)
 		{
+			// There is no validation for if brand exists or no. cos, when frontend developed user can only update existing products
 
 			await _imagesService.UpdateImage(id, model);
 
 
-			var brand = new Brand
-			{
-				Id = id,
-				Name = model.Name,
-				Description = model.Description,
-				ManufacturedCountry = model.ManufacturedCountry,
-				ImageUrl = "BrandImages/" + model.Image.FileName
-			};
+			var brand = Mapper.Map(id,model);
+
+
 
 			var updatedBrand = await _brandsRepository.Update(id, brand);
-			var result = new BrandModel
-			{
-				Id = updatedBrand.Id,
-				Name = updatedBrand.Name,
-				Description = updatedBrand.Description,
-				ManufacturedCountry = updatedBrand.ManufacturedCountry,
-				ImageUrl = updatedBrand.ImageUrl
-			};
+			var result = Mapper.Map(updatedBrand);
+
+
 
 			return result;
 		}

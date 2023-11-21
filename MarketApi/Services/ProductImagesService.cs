@@ -30,7 +30,9 @@ namespace MarketApi.Services
 					Directory.CreateDirectory(directoryPath);
 				}
 
-				var filename = model.Image.FileName;
+				//var filename = model.Image.FileName;
+
+				var filename = String.Concat(model.CarName," ",model.Name," ",model.BrandName, ".jpg");
 
 				using (var fileStream = new FileStream(Path.Combine(directoryPath, filename), FileMode.Create))
 				{
@@ -64,7 +66,7 @@ namespace MarketApi.Services
 				}
 				var filePath = Path.Combine(rootDirectoryPath, oldProductsImageUrl);
 
-				var newFilename = model.Image.FileName; 
+				var newFilename = String.Concat(model.CarName, " ", model.Name, " ", model.BrandName, ".jpg"); 
 
 				if (File.Exists(filePath))
 				{

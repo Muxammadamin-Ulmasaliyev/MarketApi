@@ -7,7 +7,11 @@ using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
-
+/*
+ * admin           Admin$2005
+ * simpleUser      $impLe123
+ * 
+ */
 namespace EComerceApi.Controllers
 {
 	[Route("api/[controller]")]
@@ -15,11 +19,13 @@ namespace EComerceApi.Controllers
 	public class AuthController : ControllerBase
 	{
 		private readonly UserManager<AppUser> _userManager;
+		private readonly RoleManager<IdentityRole> _roleManager;
 		private readonly IConfiguration _configuration;
 
-		public AuthController(UserManager<AppUser> userManager, IConfiguration configuration)
+		public AuthController(UserManager<AppUser> userManager, IConfiguration configuration,RoleManager<IdentityRole> roleManager)
 		{
 			_userManager = userManager;
+			_roleManager = roleManager;
 			_configuration = configuration;
 		}
 		[Route("register")]
@@ -41,10 +47,20 @@ namespace EComerceApi.Controllers
 			};
 
 			var result = await _userManager.CreateAsync(user, registerModel.Password);
+
 			if (!result.Succeeded)
 			{
 				return StatusCode(StatusCodes.Status500InternalServerError, new ResponseModel { Status = "Error", Message = "User creation failed! Password must contain lower, upper, symbols characters" });
 			}
+
+			/*
+			var roleExists = await _roleManager.RoleExistsAsync("Admin");
+			if (!roleExists)
+			{
+				await _roleManager.CreateAsync(new IdentityRole("Admin"));
+			}
+			await _userManager.AddToRoleAsync(user, "Admin"); 
+			*/
 			return Ok(new ResponseModel { Status = "Success", Message = "User created successfully" });
 		}
 

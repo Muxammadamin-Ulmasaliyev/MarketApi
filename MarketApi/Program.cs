@@ -17,6 +17,12 @@ builder.Services.AddDbContextPool<AppDbContext>(options => options.UseSqlServer(
 builder.Services.AddIdentity<AppUser, IdentityRole>()
 	.AddEntityFrameworkStores<AppDbContext>()
 	.AddDefaultTokenProviders();
+
+builder.Services.AddAuthorization(options =>
+{
+	options.AddPolicy("AdminPolicy", policy =>
+		policy.RequireRole("ADMIN"));
+});
 // Add services to the container.
 
 
