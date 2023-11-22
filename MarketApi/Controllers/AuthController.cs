@@ -28,6 +28,7 @@ namespace EComerceApi.Controllers
 			_roleManager = roleManager;
 			_configuration = configuration;
 		}
+		
 		[Route("register")]
 		[HttpPost]
 		public async Task<IActionResult> Register(RegisterModel registerModel)
