@@ -70,10 +70,7 @@ namespace MarketApi.Services
 
 				var rootDirectoryPath = _hostingEnvironment.WebRootPath;
 
-				if (!Directory.Exists(directoryPath))
-				{
-					Directory.CreateDirectory(directoryPath);
-				}
+				Directory.CreateDirectory(directoryPath);
 
 				var oldBrandsImageUrl = await _brandsRepository.GetImageUrlById(id);
 				if (oldBrandsImageUrl == null)

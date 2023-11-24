@@ -54,8 +54,8 @@ builder.Services.AddSwaggerGen();
 
 
 
-builder.Services.AddScoped<IProductsRepository, ProductsRepository>();	
-builder.Services.AddScoped<IProductsService,ProductsService>();
+builder.Services.AddScoped<IProductsRepository, ProductsRepository>();
+builder.Services.AddScoped<IProductsService, ProductsService>();
 
 builder.Services.AddScoped<IBrandsRepository, BrandsRepository>();
 builder.Services.AddScoped<IBrandsService, BrandsService>();
@@ -69,7 +69,7 @@ builder.Services.AddScoped<IImagesService<ProductModel>, ProductImagesService>()
 builder.Services.AddScoped<IImagesService<BrandModel>, BrandImagesService>();
 builder.Services.AddScoped<IImagesService<CarModel>, CarImagesService>();
 
-
+builder.Services.AddScoped<IExportService, ExportService>();
 
 
 var app = builder.Build();

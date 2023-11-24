@@ -25,12 +25,8 @@ namespace MarketApi.Services
 				var directoryPath = Path.Combine(_hostingEnvironment.WebRootPath, "ProductImages/");
 
 
-				if (!Directory.Exists(directoryPath))
-				{
-					Directory.CreateDirectory(directoryPath);
-				}
+				Directory.CreateDirectory(directoryPath);
 
-				//var filename = model.Image.FileName;
 
 				var filename = String.Concat(model.CarName," ",model.Name," ",model.BrandName, ".jpg");
 
@@ -54,10 +50,7 @@ namespace MarketApi.Services
 
 				var rootDirectoryPath = _hostingEnvironment.WebRootPath;
 
-				if (!Directory.Exists(directoryPath))
-				{
-					Directory.CreateDirectory(directoryPath);
-				}
+				Directory.CreateDirectory(directoryPath);
 
 				var oldProductsImageUrl = await _productsRepository.GetImageUrlById(id);
 				if (oldProductsImageUrl == null)
