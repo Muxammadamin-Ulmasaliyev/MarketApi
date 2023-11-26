@@ -16,27 +16,18 @@ namespace MarketApi.Controllers
 			_exportService = exportService;
 		}
 
-		[HttpPost("pdf")]
+		
 
-		public async Task<IActionResult> ExportAsPdf()
-		{
-			if(await _exportService.ExportAsPdf())
-			{
-				return Ok();
-			}
-			return Conflict();
-		}
-
-		[HttpPost("excel")]
+		[HttpGet("excel/download")]
 
 		public async Task<IActionResult> ExportAsExcel()
 		{
-			if (await _exportService.ExportAsExcel())
-			{
-				return Ok();
-			}
-			return Conflict();
-		}
+            var fileContents = await _exportService.ExportAsExcel();
+            var contentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+            var fileName = $"Products_{DateTime.Now}.xlsx";
+
+            return File(fileContents, contentType, fileName);
+        }
 
 
 	}

@@ -1,9 +1,10 @@
-﻿namespace MarketApi.Services
+﻿using OfficeOpenXml;
+
+namespace MarketApi.Services
 {
 	public interface IExportService
 	{
-		Task<bool> ExportAsPdf();
 
-		Task<bool> ExportAsExcel();
+		Task<byte[]> ExportAsExcel();
 	}
 }

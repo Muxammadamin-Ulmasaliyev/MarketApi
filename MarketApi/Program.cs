@@ -53,7 +53,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 
-
+#region registering Services
 builder.Services.AddScoped<IProductsRepository, ProductsRepository>();
 builder.Services.AddScoped<IProductsService, ProductsService>();
 
@@ -69,8 +69,12 @@ builder.Services.AddScoped<IImagesService<ProductModel>, ProductImagesService>()
 builder.Services.AddScoped<IImagesService<BrandModel>, BrandImagesService>();
 builder.Services.AddScoped<IImagesService<CarModel>, CarImagesService>();
 
-builder.Services.AddScoped<IExportService, ExportService>();
 
+builder.Services.AddScoped<IUsersRepository, UsersRepository>();
+builder.Services.AddScoped<IUsersService, UsersService>();
+
+builder.Services.AddScoped<IExportService, ExportService>();
+#endregion
 
 var app = builder.Build();
 

@@ -131,6 +131,18 @@ namespace MarketApi.MapProfiles
 			};
 		}
 
+		public static UserModel Map(AppUser appUser)
+		{
+			return new UserModel
+			{
+				Id = appUser.Id,
+				Username = appUser.UserName,
+				Email = appUser.Email,
+				PhoneNumber = appUser.PhoneNumber,
+				AccessFailedCount = appUser.AccessFailedCount
+			};
+		}
+
 
 
 		
