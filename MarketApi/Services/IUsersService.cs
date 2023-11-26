@@ -1,9 +1,8 @@
-﻿using MarketApi.Domain;
-using MarketApi.Models;
+﻿using MarketApi.Models;
 
 namespace MarketApi.Services
 {
-	public interface IUsersService
+    public interface IUsersService
 	{
 		Task<IEnumerable<UserModel>> GetAll();
 		Task<UserModel> GetByName(string username);

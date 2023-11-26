@@ -1,11 +1,10 @@
 ﻿using MarketApi.Data;
-using MarketApi.Domain;
 using MarketApi.MapProfiles;
 using MarketApi.Models;
 
 namespace MarketApi.Services
 {
-	public class CarsService : ICarsService
+    public class CarsService : ICarsService
 	{
 		private readonly ICarsRepository _carsRepository;
 		private readonly IImagesService<CarModel> _imagesService;

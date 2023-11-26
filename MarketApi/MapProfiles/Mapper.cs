@@ -3,7 +3,7 @@ using MarketApi.Models;
 
 namespace MarketApi.MapProfiles
 {
-	public static class Mapper
+    public static class Mapper
 	{
 		public static ProductModel Map(Product product)
 		{

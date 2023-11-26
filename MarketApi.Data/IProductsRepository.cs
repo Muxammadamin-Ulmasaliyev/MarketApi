@@ -1,13 +1,8 @@
 ﻿using MarketApi.Domain;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MarketApi.Data
 {
-	public interface IProductsRepository
+    public interface IProductsRepository
 	{
 		Task<string> GetImageUrlById(int id);
 		Task<IEnumerable<Product>> GetAll();

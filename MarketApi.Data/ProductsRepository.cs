@@ -1,16 +1,10 @@
 ﻿using ECommerce.Domain;
 using MarketApi.Domain;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Collections.Immutable;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MarketApi.Data
 {
-	public class ProductsRepository : IProductsRepository
+    public class ProductsRepository : IProductsRepository
 	{
 		private readonly AppDbContext _appDbContext;
 		public ProductsRepository(AppDbContext appDbContext)

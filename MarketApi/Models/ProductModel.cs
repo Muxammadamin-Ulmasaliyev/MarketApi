@@ -1,10 +1,9 @@
-﻿using MarketApi.Domain;
-using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
+﻿using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 using System.ComponentModel.DataAnnotations;
 
 namespace MarketApi.Models
 {
-	public class ProductModel
+    public class ProductModel
 	{
 		public int Id { get; set; }
 		[MaxLength(30, ErrorMessage = "Name should be shorter than 30 characters")]

@@ -1,13 +1,8 @@
 ﻿using MarketApi.Domain;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MarketApi.Data
 {
-	public interface IUsersRepository
+    public interface IUsersRepository
 	{
 		Task<IEnumerable<AppUser>> GetAll();
 		Task<AppUser> GetByName(string username);

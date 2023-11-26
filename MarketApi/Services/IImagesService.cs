@@ -1,8 +1,6 @@
-﻿using MarketApi.Models;
-
-namespace MarketApi.Services
+﻿namespace MarketApi.Services
 {
-	public interface IImagesService<T> where T : class
+    public interface IImagesService<T> where T : class
 	{
 		public Task<bool> SaveImage(T model);
 		public Task<bool> UpdateImage(int id, T model);

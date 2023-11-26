@@ -1,10 +1,8 @@
-﻿using MarketApi.Data;
-using MarketApi.Domain;
-using MarketApi.Models;
+﻿using MarketApi.Models;
 
 namespace MarketApi.Services
 {
-	public interface IProductsService
+    public interface IProductsService
 	{
 		Task<IEnumerable<ProductModel>> GetAll();
 		Task<ProductModel> Get(int id);	

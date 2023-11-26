@@ -1,12 +1,10 @@
 ﻿using MarketApi.Data;
-using MarketApi.Domain;
 using MarketApi.MapProfiles;
 using MarketApi.Models;
-using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 namespace MarketApi.Services
 {
-	public class ProductsService : IProductsService
+    public class ProductsService : IProductsService
 	{
 		private readonly IProductsRepository _productsRepository;
 		private readonly IValidationService _validationService;

@@ -2,7 +2,7 @@
 
 namespace MarketApi.Services
 {
-	public interface ICarsService
+    public interface ICarsService
 	{
 		Task<IEnumerable<CarModel>> GetAll();
 		Task<CarModel> Get(int id);

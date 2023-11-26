@@ -1,12 +1,10 @@
-﻿using MarketApi.Domain;
-using MarketApi.Models;
+﻿using MarketApi.Models;
 using MarketApi.Services;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace MarketApi.Controllers
 {
-	[Route("api/[controller]")]
+    [Route("api/[controller]")]
 	[ApiController]
 	public class BrandsController : ControllerBase
 	{

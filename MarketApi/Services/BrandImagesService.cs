@@ -4,7 +4,7 @@ using IHostingEnvironment = Microsoft.AspNetCore.Hosting.IHostingEnvironment;
 
 namespace MarketApi.Services
 {
-	public class BrandImagesService : IImagesService<BrandModel>
+    public class BrandImagesService : IImagesService<BrandModel>
 	{
 		private readonly IHostingEnvironment _hostingEnvironment;
 		private readonly IBrandsRepository _brandsRepository;

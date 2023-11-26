@@ -5,7 +5,7 @@ using IHostingEnvironment = Microsoft.AspNetCore.Hosting.IHostingEnvironment;
 
 namespace MarketApi.Services
 {
-	public class CarImagesService : IImagesService<CarModel>
+    public class CarImagesService : IImagesService<CarModel>
 	{
 		private readonly IHostingEnvironment _hostingEnvironment;
 		private readonly ICarsRepository _carsRepository;

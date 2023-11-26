@@ -4,7 +4,7 @@ using MarketApi.Models;
 
 namespace MarketApi.Services
 {
-	public class UsersService : IUsersService
+    public class UsersService : IUsersService
 	{
 		private readonly IUsersRepository _usersRepository;
         public UsersService(IUsersRepository usersRepository)

@@ -1,12 +1,10 @@
-﻿using ECommerce.Domain;
-using MarketApi.Data;
+﻿using MarketApi.Data;
 using MarketApi.Models;
-using System.Runtime.CompilerServices;
 using IHostingEnvironment = Microsoft.AspNetCore.Hosting.IHostingEnvironment;
 
 namespace MarketApi.Services
 {
-	public class ProductImagesService : IImagesService<ProductModel>
+    public class ProductImagesService : IImagesService<ProductModel>
 	{
 		private readonly IHostingEnvironment _hostingEnvironment;
 		private readonly IProductsRepository _productsRepository;

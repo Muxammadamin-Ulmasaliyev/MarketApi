@@ -2,7 +2,7 @@
 
 namespace MarketApi.Services
 {
-	public class ValidationService : IValidationService
+    public class ValidationService : IValidationService
 	{ 
 
 		private readonly IBrandsRepository _brandsRepository;

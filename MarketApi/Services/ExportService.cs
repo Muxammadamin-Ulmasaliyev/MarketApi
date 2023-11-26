@@ -3,9 +3,6 @@ using MarketApi.MapProfiles;
 using MarketApi.Models;
 using OfficeOpenXml;
 using OfficeOpenXml.Style;
-using QuestPDF.Fluent;
-using QuestPDF.Helpers;
-using QuestPDF.Infrastructure;
 using System.Drawing;
 
 namespace MarketApi.Services

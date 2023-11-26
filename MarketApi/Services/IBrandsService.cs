@@ -2,7 +2,7 @@
 
 namespace MarketApi.Services
 {
-	public interface IBrandsService
+    public interface IBrandsService
 	{
 		Task<IEnumerable<BrandModel>> GetAll();
 		Task<BrandModel> Get(int id);

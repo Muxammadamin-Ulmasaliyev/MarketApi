@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace MarketApi.Data
 {
-	public class BrandsRepository : IBrandsRepository
+    public class BrandsRepository : IBrandsRepository
 	{
 		private readonly AppDbContext _appDbContext;
 		public BrandsRepository(AppDbContext appDbContext)

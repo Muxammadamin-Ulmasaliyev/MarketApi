@@ -1,15 +1,10 @@
 ﻿using ECommerce.Domain;
 using MarketApi.Domain;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MarketApi.Data
 {
-	public class CarsRepository : ICarsRepository
+    public class CarsRepository : ICarsRepository
 	{
 		private readonly AppDbContext _appDbContext;
 		public CarsRepository(AppDbContext appDbContext)

@@ -1,11 +1,10 @@
 ﻿using MarketApi.Services;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace MarketApi.Controllers
 {
-	[Authorize(Roles = "Admin")]
+    [Authorize(Roles = "Admin")]
 	[Route("api/[controller]")]
 	[ApiController]
 	public class UsersController : ControllerBase

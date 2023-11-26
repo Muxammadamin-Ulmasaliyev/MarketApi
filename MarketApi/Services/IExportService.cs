@@ -1,8 +1,6 @@
-﻿using OfficeOpenXml;
-
-namespace MarketApi.Services
+﻿namespace MarketApi.Services
 {
-	public interface IExportService
+    public interface IExportService
 	{
 
 		Task<byte[]> ExportAsExcel();
