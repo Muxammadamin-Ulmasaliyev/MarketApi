@@ -32,7 +32,7 @@ namespace MarketApi.Services
 			}
 			catch (Exception ex)
 			{
-				return false;
+				throw new Exception("Error in CarImagesService.cs");
 			}
 			return true;
 		}
@@ -55,9 +55,10 @@ namespace MarketApi.Services
 			}
 			catch (Exception ex)
 			{
-				return false;
-			}
-		}
+                throw new Exception("Error in CarImagesService.cs");
+
+            }
+        }
 
 		public async Task<bool> UpdateImage(int id, CarModel model)
 		{
@@ -95,9 +96,10 @@ namespace MarketApi.Services
 			}
 			catch (Exception ex)
 			{
-				return false;
-			}
-		}
+                throw new Exception("Error in CarImagesService.cs");
+
+            }
+        }
 
 	}
 }

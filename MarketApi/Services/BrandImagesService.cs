@@ -31,9 +31,10 @@ namespace MarketApi.Services
 			}
 			catch (Exception ex)
 			{
-				return false;
-			}
-			return true;
+                throw new Exception("Error in BrandImagesService.cs");
+
+            }
+            return true;
 		}
 
 		public async Task<bool> SaveImage(BrandModel model)
@@ -58,9 +59,10 @@ namespace MarketApi.Services
 			}
 			catch (Exception ex)
 			{
-				return false;
-			}
-		}
+                throw new Exception("Error in BrandImagesService.cs");
+
+            }
+        }
 
 		public async Task<bool> UpdateImage(int id, BrandModel model)
 		{
@@ -98,8 +100,9 @@ namespace MarketApi.Services
 			}
 			catch (Exception ex)
 			{
-				return false;
-			}
-		}
+                throw new Exception("Error in BrandImagesService.cs");
+
+            }
+        }
 	}
 }

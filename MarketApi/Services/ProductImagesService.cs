@@ -36,9 +36,10 @@ namespace MarketApi.Services
 			}
 			catch (Exception ex)
 			{
-				return false;
-			}
-		}
+                throw new Exception("Error in ProductsImagesService.cs");
+
+            }
+        }
 
 		public async Task<bool> UpdateImage(int id, ProductModel model)
 		{
@@ -76,10 +77,11 @@ namespace MarketApi.Services
 			}
 			catch (Exception ex)
 			{
-				return false;
-			}
+                throw new Exception("Error in ProductsImagesService.cs");
 
-		}
+            }
+
+        }
 		public async Task<bool> DeleteImage(int id)
 		{
 			try
@@ -98,9 +100,10 @@ namespace MarketApi.Services
 			}
 			catch (Exception ex)
 			{
-				return false;
-			}
-			return true;
+                throw new Exception("Error in ProductsImagesService.cs");
+
+            }
+            return true;
 		}
 
 

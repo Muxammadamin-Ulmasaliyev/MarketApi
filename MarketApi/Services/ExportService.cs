@@ -72,7 +72,7 @@ namespace MarketApi.Services
 			}
 			catch (Exception ex)
 			{
-				throw new Exception();
+				throw new Exception("Error in ExportService.cs");
 			}
 		}
 
